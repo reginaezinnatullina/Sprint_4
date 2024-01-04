@@ -1,4 +1,4 @@
-package org.example;
+package org.example.page;
 
         import org.openqa.selenium.By;
         import org.openqa.selenium.WebDriver;
@@ -6,13 +6,11 @@ package org.example;
 
         import static org.junit.Assert.assertEquals;
         import org.openqa.selenium.JavascriptExecutor;
-        import org.openqa.selenium.support.ui.ExpectedConditions;
-        import org.openqa.selenium.support.ui.WebDriverWait;
 
         import java.time.Duration;
 
 // Класс главной страницы
-class HomePageMesto {
+public class HomePageMesto {
     private static WebDriver driver;
     // создай локатор на кнопку куки
     private final By cookieButton = By.id("rcc-confirm-button");
@@ -72,13 +70,19 @@ class HomePageMesto {
     }
 
     // Проверка текста в открытой панели
-    public static void checkTextInOpenPanel(String expectedText, int answerNumber) {//    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    public static void checkTextInOpenPanel(String expectedText, int answerNumber) {
         String answerText = driver.findElement(By.id(dropDownAnswersArray[answerNumber])).getText();
         assertEquals(expectedText, answerText);
     }
+    /** Клик по кнопке вопроса */
+    public HomePageMesto clickQuestionButton(String questionButtonLocator) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.findElement(By.id(questionButtonLocator)).click();
+        return this;
+    }
     // Клик по кнопке "Статус заказа"
     public void clickButtonOrder(){
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.findElement(checkButtonStatusOrder).click();
     }
     // введение номера проверяемого заказа
@@ -94,7 +98,7 @@ class HomePageMesto {
 
     public void numberOfNewOrder(String numberOfOrder){
         clickButtonOrder();
-       clickNumberOrder(numberOfOrder);
+        clickNumberOrder(numberOfOrder);
         clickButtonGo();
     }
 }
